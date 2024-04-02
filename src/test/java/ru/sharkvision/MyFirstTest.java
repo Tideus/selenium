@@ -6,22 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class MyFirstTest {
-    private static WebDriver driver;
-
-    @BeforeAll
-    public static void start() {
-        driver = new ChromeDriver();
-    }
+public class MyFirstTest extends TestBase {
 
     @Test
     public void myFirstTest() {
         driver.get("https://google.com");
     }
 
-    @AfterAll
-    public static void stop() {
-        driver.quit();
-        driver = null;
-    }
 }
