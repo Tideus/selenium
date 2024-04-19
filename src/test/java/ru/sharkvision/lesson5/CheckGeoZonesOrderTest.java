@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import ru.sharkvision.TestBase;
 
 import java.util.ArrayList;
@@ -31,10 +32,13 @@ public class CheckGeoZonesOrderTest extends TestBase {
             countryRow.click();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("table#table-zones")));
 
-            List<WebElement> zonesOptions = driver.findElements(By.cssSelector("select[name$='][zone_code]'] option[selected=selected]"));
+            List<Select> selectZones = driver.findElements(By.cssSelector("select[name$='][zone_code]']"))
+                    .stream()
+                    .map(Select::new)
+                    .collect(Collectors.toList());
 
-            List<String> zones = zonesOptions.stream()
-                    .map(WebElement::getText)
+            List<String> zones = selectZones.stream()
+                    .map(webElement -> webElement.getFirstSelectedOption().getAttribute("text"))
                     .collect(Collectors.toList());
 
             List<String> sortedZones = new ArrayList<>(zones).stream().sorted().collect(Collectors.toList());
